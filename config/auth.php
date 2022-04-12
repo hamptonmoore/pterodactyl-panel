@@ -113,11 +113,11 @@ return [
     ],
 
     'provider' => new \League\OAuth2\Client\Provider\GenericProvider([
-        'clientId'                => '-', 
-        'clientSecret'            => '-',    // The client password assigned to you by the provider
-        'redirectUri'             => '-',
-        'urlAuthorize'            => '-',
-        'urlAccessToken'          => '-',
-        'urlResourceOwnerDetails' => '-'
+        'clientId'                => env('AUTH_OAUTH_CLIENTID', ""), 
+        'clientSecret'            => env('AUTH_OAUTH_CLIENTSECRET', ""),    // The client password assigned to you by the provider
+        'redirectUri'             => env('AUTH_OAUTH_REDIRECTURI', ""),
+        'urlAuthorize'            => env('AUTH_OAUTH_URLAUTHORIZE', ""),
+        'urlAccessToken'          => env('AUTH_OAUTH_URLACCESSTOKEN', ""),
+        'urlResourceOwnerDetails' => env('AUTH_OAUTH_URLRESOURCEOWNERDETAILS', "")
     ])
 ];
