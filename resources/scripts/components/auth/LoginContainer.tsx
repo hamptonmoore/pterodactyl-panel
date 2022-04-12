@@ -93,7 +93,7 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                     </div>
                     <div css={tw`mt-6`}>
                         <Button type={'submit'} size={'xlarge'} isLoading={isSubmitting} disabled={isSubmitting}>
-                            Login
+                            Manual Login
                         </Button>
                     </div>
                     {recaptchaEnabled &&
@@ -111,6 +111,14 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                         }}
                     />
                     }
+                    <br />
+                    <a
+                        href={'/auth/login/oauth2/'}
+                    >
+                        <Button type={'button'} size={'xlarge'}>
+                            Login with HWS
+                        </Button>
+                    </a>
                     <div css={tw`mt-6 text-center`}>
                         <Link
                             to={'/auth/password'}

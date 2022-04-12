@@ -111,4 +111,13 @@ return [
             'expire' => 60,
         ],
     ],
+
+    'provider' => new \League\OAuth2\Client\Provider\GenericProvider([
+        'clientId'                => '-', 
+        'clientSecret'            => '-',    // The client password assigned to you by the provider
+        'redirectUri'             => '-',
+        'urlAuthorize'            => '-',
+        'urlAccessToken'          => '-',
+        'urlResourceOwnerDetails' => '-'
+    ])
 ];

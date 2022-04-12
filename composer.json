@@ -30,6 +30,7 @@
         "lcobucci/jwt": "^4.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "league/flysystem-memory": "^1.0",
+        "league/oauth2-client": "^2.6",
         "matriphe/iso-639": "^1.2",
         "pragmarx/google2fa": "^5.0",
         "predis/predis": "^1.1",

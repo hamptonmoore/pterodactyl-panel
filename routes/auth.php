@@ -23,7 +23,8 @@ Route::group(['middleware' => 'guest'], function () {
         // Login endpoints.
         Route::post('/login', 'LoginController@login')->middleware('recaptcha');
         Route::post('/login/checkpoint', 'LoginCheckpointController')->name('auth.login-checkpoint');
-
+        Route::get('/login/oauth2/', 'LoginController@oauthredirect')->name('');
+        Route::get('/login/oauth2-callback/', 'LoginController@oauthcallback')->name('');
         // Forgot password route. A post to this endpoint will trigger an
         // email to be sent containing a reset token.
         Route::post('/password', 'ForgotPasswordController@sendResetLinkEmail')

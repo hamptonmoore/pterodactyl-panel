@@ -15,12 +15,16 @@ class LoginController extends AbstractLoginController
 {
     private ViewFactory $view;
 
+    private \League\OAuth2\Client\Provider\GenericProvider $provider;
+
     /**
      * LoginController constructor.
      */
     public function __construct(ViewFactory $view)
     {
         parent::__construct();
+
+        $this->provider = config('auth.provider');
 
         $this->view = $view;
     }
@@ -87,5 +91,44 @@ class LoginController extends AbstractLoginController
         $this->auth->guard()->login($user, true);
 
         return $this->sendLoginResponse($user, $request);
+    }
+
+    public function oauthredirect(Request $request): \Illuminate\Http\RedirectResponse
+    {
+
+        $options = [
+            'scope' => ['openid','email', "profile"]
+        ];
+        $url = $this->provider->getAuthorizationUrl($options);
+        session(['state' => $this->provider->getState()]);
+        return redirect($url);
+    }
+
+    public function oauthcallback(Request $request) 
+    {
+        if (empty($_GET['state']) || null == session('state') || $_GET['state'] !== session('state')) {
+            echo session("state");
+            if (null !== session('state')) {
+                $request->session()->forget('state');
+            }
+
+            return redirect("/");
+        }
+
+        $accessToken = $this->provider->getAccessToken('authorization_code', [
+            'code' => $_GET['code'],
+            'scope' => ['openid','email', "profile"]
+        ]);
+        $d = json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $accessToken)[1]))));
+        $username = $d->sub;
+
+        try {
+            $user = User::query()->where($this->getField($username), $username)->firstOrFail();
+        } catch (ModelNotFoundException $exception) {
+            return redirect("/");
+        }
+
+        $this->auth->guard()->login($user, true);
+        return redirect("/");
     }
 }
